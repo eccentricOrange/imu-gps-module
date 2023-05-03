@@ -24,7 +24,7 @@ class MPU6050 {
             int16_t* temperature
         );
         void printAccelerometerPeaks(Stream* serialInterface, int16_t accelerometerReadings[3]);
-        float* correct(int16_t accelerometerReadings[3]);
+        float* correctAccelerometer(int16_t accelerometerReadings[3]);
 };  // class MPU6050
 
 MPU6050::MPU6050(TwoWire* wireInterface, int address) {
@@ -52,7 +52,7 @@ void MPU6050::readValues(int16_t accelerometer[3], int16_t gyroscope[3], int16_t
     // X: 0x3B (ACCEL_XOUT_H) and 0x3C (ACCEL_XOUT_L)
     // Y: 0x3D (ACCEL_YOUT_H) and 0x3E (ACCEL_YOUT_L)
     // Z: 0x3F (ACCEL_ZOUT_H) and 0x40 (ACCEL_ZOUT_L)
-    for (int i = 0; i < 3; i++) {
+    for (size_t i = 0; i < 3; i++) {
         accelerometer[i] = (*_wireInterface).read() << 8 | (*_wireInterface).read();
     }
 
@@ -62,21 +62,15 @@ void MPU6050::readValues(int16_t accelerometer[3], int16_t gyroscope[3], int16_t
     // X: 0x43 (GYRO_XOUT_H) and 0x44 (GYRO_XOUT_L)
     // Y: 0x45 (GYRO_YOUT_H) and 0x46 (GYRO_YOUT_L)
     // Z: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
-    for (int i = 0; i < 3; i++) {
+    for (size_t i = 0; i < 3; i++) {
         gyroscope[i] = (*_wireInterface).read() << 8 | (*_wireInterface).read();
     }
 }  // MPU6050::readValues
 
 void MPU6050::printAccelerometerPeaks(Stream* serialInterface, int16_t accelerometerReadings[3]) {
-    static int16_t accelerometerMaximums[3];
-    static int16_t accelerometerMinimums[3];
-
-    if (accelerometerMaximums[0] == 0) {
-        for (size_t i = 0; i < 3; i++) {
-            accelerometerMaximums[i] = accelerometerReadings[i];
-            accelerometerMinimums[i] = accelerometerReadings[i];
-        }
-    }
+    // initialize to extreme values to prevent false positives
+    static int16_t accelerometerMaximums[3] = {-32768, -32768, -32768};
+    static int16_t accelerometerMinimums[3] = {32767, 32767, 32767};
 
     for (size_t i = 0; i < 3; i++) {
         if (accelerometerReadings[i] > accelerometerMaximums[i]) {
@@ -93,7 +87,7 @@ void MPU6050::printAccelerometerPeaks(Stream* serialInterface, int16_t accelerom
     (*serialInterface).printf("Z(%d, %d, %d)\n", accelerometerReadings[2], accelerometerMaximums[2], accelerometerMinimums[2]);
 }  // MPU6050::printAccelerometerPeaks
 
-float* MPU6050::correct(int16_t accelerometerReadings[3]) {
+float* MPU6050::correctAccelerometer(int16_t accelerometerReadings[3]) {
     static float correctedAccelerometerReadings[3];
 
     for (size_t i = 0; i < 3; i++) {
@@ -101,6 +95,6 @@ float* MPU6050::correct(int16_t accelerometerReadings[3]) {
     }
 
     return correctedAccelerometerReadings;
-}  // MPU6050::correct
+}  // MPU6050::correctAccelerometer
 
 #endif // MPU6060_h

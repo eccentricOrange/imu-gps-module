@@ -16,10 +16,10 @@ void setup() {
 
 void loop() {
     mpu6050.readValues(accelerometer, gyroscope, &temperature);
-    correctedAccelerometer = mpu6050.correct(accelerometer);
+    correctedAccelerometer = mpu6050.correctAccelerometer(accelerometer);
 
     Serial.printf(
-        "Accelerometer: %f, %f, %f\n",
+        "AX:%f,AY:%f,AZ:%f\n",
         correctedAccelerometer[0],
         correctedAccelerometer[1],
         correctedAccelerometer[2]
