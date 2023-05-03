@@ -19,11 +19,11 @@ Make a stand-alone module that provides IMU and GPS data to the main controller.
 ## Plan
 
 Infrastructure:
-* **Microcontroller:** ESP32
-* **Main controller:** Raspberry Pi 4
-* **ROS2 version:** Humble
-* **IMU:** MPU 9250
-* **GPS:** u-blox NEO 8M
+*   **Microcontroller:** ESP32
+*   **Main controller:** Raspberry Pi 4
+*   **ROS2 version:** Humble
+*   **IMU:** MPU 9250
+*   **GPS:** u-blox NEO 8M
 
 ### Week 1
 1.  Research on good IMU and GPS. With existing knowledge, 8M is a good GPS but this knowledge may be out-dated. Need to look up about IMU. I plan to try and find info on IMUs used in smartphones because these are proven to be reliable/precise.
@@ -43,5 +43,5 @@ Infrastructure:
 A full week is being allocated to this because I have virtually no idea about filtering. I will have to learn from scratch. Event if I use external libraries, I want to at least know the high-level concept.
 
 ### Week 4
-1.  Research which ROS2 protocols models are good.
+1.  Research which ROS2 protocols/models are good.
 1.  If pub/sub model doesn't turn out to be the best, migrate to whatever is the best (probably actionlib).
