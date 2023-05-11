@@ -10,7 +10,11 @@ int16_t temperature;
 
 void setup() {
     Serial.begin(115200);
+
+    digitalWrite(21, HIGH);  // pull-up the I2C SDA line
+    digitalWrite(22, HIGH);  // pull-up the I2C SCL line
     Wire.begin();
+    
     mpu6050.initialize();
 }
 
