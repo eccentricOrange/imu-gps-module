@@ -1,6 +1,9 @@
 #include <Arduino.h>
 #include "Wire.h"
-#include "MPU6050.h"
+#include "imu.h"
+// #include <MPU6050.h>
+
+
 
 MPU6050 mpu6050(&Wire, 0x68);
 
@@ -11,9 +14,10 @@ int16_t temperature;
 void setup() {
     Serial.begin(115200);
 
-    digitalWrite(21, HIGH);  // pull-up the I2C SDA line
-    digitalWrite(22, HIGH);  // pull-up the I2C SCL line
-    Wire.begin();
+    pinMode(21, INPUT_PULLUP);
+    pinMode(22, INPUT_PULLUP);
+
+    Wire.begin(21, 22, 5000);
     
     mpu6050.initialize();
 }

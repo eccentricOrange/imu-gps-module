@@ -93,6 +93,19 @@ The first problem to sort out was to get WSL2 to see the USB device (which in my
 
 1.  At this point, you should be ready to use PlatformIO, ESP-IDF, or whatever you like.
 
+# Hardware setup
+
+| Component | Pin/Wire | ESP32 pin |
+| --- | --- | --- |
+| MPU 6050 | VCC | 3.3V |
+| MPU 6050 | GND | GND |
+| MPU 6050 | SCL | 22 |
+| MPU 6050 | SDA | 21 |
+| GPS | VCC (Red) | 5V |
+| GPS | GND (Black) | GND |
+| GPS | TX (Green) | RX2 |
+| GPS | RX (Yellow) | TX2 |
+
 
 # Getting started with micro-ROS
 Beware this step. It is lots and lots of downloading. So plan in advance; set up a good internet connection and have a good amount of time to spare (or do it while you're going to do something else). Especially the ESP32-IDF is a long download.
